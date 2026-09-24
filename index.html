@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Comprobación: movimientos literarios y Madame Bovary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF2F6; --surface:#FFFFFF; --ink:#1F2A44; --muted:#56607A;
+  --razon:#2B5C8A; --razon-soft:#DCE8F4;
+  --emocion:#A8356A; --emocion-soft:#F5DDE8;
+  --bovary:#F2C14E; --bovary-soft:#FDF3D6;
+  --ok:#1D7A4A; --ok-soft:#DFF3E7; --no:#B03A2E; --no-soft:#F8E0DD;
+  --line:#C5CEDB;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141A28; --surface:#1E2638; --ink:#E8ECF4; --muted:#A3ADC2;
+    --razon:#7FB0E0; --razon-soft:#22364F; --emocion:#E688B3; --emocion-soft:#44243A;
+    --bovary:#F2C14E; --bovary-soft:#3A3222;
+    --ok:#6FD39C; --ok-soft:#1F3A2C; --no:#F08A7E; --no-soft:#46231F; --line:#34405A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141A28; --surface:#1E2638; --ink:#E8ECF4; --muted:#A3ADC2;
+  --razon:#7FB0E0; --razon-soft:#22364F; --emocion:#E688B3; --emocion-soft:#44243A;
+  --bovary:#F2C14E; --bovary-soft:#3A3222;
+  --ok:#6FD39C; --ok-soft:#1F3A2C; --no:#F08A7E; --no-soft:#46231F; --line:#34405A;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:1.05rem;line-height:1.55}
+h1,h2,h3{font-family:"Bitter",Georgia,"Times New Roman",serif;line-height:1.15;margin:0}
+.wrap{max-width:860px;margin:0 auto;padding:2.2rem 1.1rem 5rem}
+
+header{background:var(--ink);color:var(--bg);border-radius:20px;padding:1.8rem 1.5rem;position:relative;overflow:hidden}
+header h1{font-size:clamp(1.8rem,5.5vw,2.8rem);font-weight:800;max-width:30rem}
+header p{margin:.7rem 0 0;opacity:.85;max-width:36rem}
+header .bola{position:absolute;right:-30px;top:-30px;width:140px;height:140px;border-radius:50%;background:var(--bovary);opacity:.9}
+.datos{display:grid;grid-template-columns:2fr 1fr 1fr;gap:.7rem;margin-top:1.3rem;position:relative}
+.datos label{font-size:.85rem;opacity:.85;display:block}
+.datos input{width:100%;font:inherit;padding:.5rem .7rem;border-radius:10px;border:none;background:var(--bg);color:var(--ink)}
+.indic{background:var(--surface);border-radius:14px;padding:1rem 1.2rem;margin:1.2rem 0;font-size:.97rem}
+.indic b{color:var(--razon)}
+
+.parte{background:var(--surface);border-radius:18px;padding:1.4rem 1.3rem;margin-top:1.4rem;border-left:8px solid var(--c)}
+.parte.lit{--c:var(--razon);--cs:var(--razon-soft)}
+.parte.bov{--c:var(--bovary);--cs:var(--bovary-soft)}
+.parte-top{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap}
+.parte h2{font-size:1.45rem}
+.pts{font-weight:700;font-size:.9rem;background:var(--cs);padding:.2rem .7rem;border-radius:999px;white-space:nowrap}
+.parte .inst{color:var(--muted);margin:.35rem 0 .6rem;font-size:.97rem}
+.bloque{margin-top:1.9rem;padding-top:1rem;border-top:3px dashed var(--bovary)}
+.bloque h2{font-size:clamp(1.5rem,4.5vw,2rem)}
+.bloque p{color:var(--muted);margin:.3rem 0 0}
+
+.q{padding:.9rem 0;border-top:1px solid var(--line)}
+.q:first-of-type{border-top:none}
+.q .enun{font-weight:700;margin:0 0 .5rem}
+.opts{display:grid;gap:.4rem}
+.opts label{display:flex;gap:.6rem;align-items:flex-start;padding:.5rem .7rem;border-radius:10px;border:2px solid var(--line);cursor:pointer}
+.opts label:hover{border-color:var(--c)}
+.opts input{margin-top:.3rem;accent-color:var(--razon)}
+.tf{display:flex;gap:.5rem;flex-wrap:wrap}
+.tf label{flex:0 0 auto}
+.fila{display:grid;grid-template-columns:1fr minmax(180px,240px);gap:.8rem;align-items:center;padding:.6rem 0;border-top:1px solid var(--line)}
+.fila:first-of-type{border-top:none}
+select,textarea{font:inherit;padding:.45rem .6rem;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+textarea{min-height:110px;resize:vertical}
+select:focus-visible,textarea:focus-visible,input:focus-visible,button:focus-visible{outline:3px solid var(--bovary);outline-offset:2px}
+
+.good{background:var(--ok-soft)!important;border-color:var(--ok)!important}
+.bad{background:var(--no-soft)!important;border-color:var(--no)!important}
+.fb{font-size:.92rem;margin-top:.4rem;font-weight:700}
+.fb.ok{color:var(--ok)} .fb.no{color:var(--no)}
+.modelo{display:none;margin-top:.7rem;background:var(--cs);border-radius:10px;padding:.7rem .9rem;font-size:.95rem}
+.revisado .modelo{display:block}
+
+.acciones{position:sticky;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);display:flex;gap:.6rem;justify-content:center;margin-top:2rem;flex-wrap:wrap}
+.acciones button{font:inherit;font-weight:700;padding:.75rem 1.4rem;border-radius:999px;border:none;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.18)}
+#revisar{background:var(--ink);color:var(--bg)}
+#reiniciar,#imprimir{background:var(--surface);color:var(--ink);border:2px solid var(--line)}
+.resultado{display:none;margin-top:1.6rem;background:var(--surface);border-radius:18px;padding:1.4rem;text-align:center;border:3px solid var(--bovary)}
+.resultado.visible{display:block}
+.resultado .num{font-family:"Bitter",Georgia,serif;font-size:3rem;font-weight:800}
+.barras{display:grid;gap:.5rem;margin-top:1rem;text-align:left}
+.barra{font-size:.92rem}
+.barra .track{height:10px;background:var(--bg);border-radius:6px;overflow:hidden;margin-top:.2rem}
+.barra .fill{height:100%;background:var(--razon)}
+
+@media (max-width:640px){
+  .datos{grid-template-columns:1fr 1fr}
+  .datos div:first-child{grid-column:1 / -1}
+  .fila{grid-template-columns:1fr}
+}
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .acciones,.resultado{display:none!important}
+  header{background:#fff;color:#000;border:2px solid #000}
+  header .bola{display:none}
+  .datos input{border:1px solid #000;background:#fff}
+  .parte{break-inside:avoid-page;border:1px solid #999;border-left-width:6px}
+  .q{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="bola" aria-hidden="true"></div>
+    <h1>Comprobación: movimientos literarios y Madame Bovary</h1>
+    <p>Demostrá lo que aprendiste sobre el péndulo de la literatura y la novela de Gustave Flaubert.</p>
+    <div class="datos">
+      <div><label for="nom">Nombre completo</label><input id="nom" autocomplete="name"></div>
+      <div><label for="sec">Sección</label><input id="sec"></div>
+      <div><label for="fec">Fecha</label><input id="fec" type="date"></div>
+    </div>
+  </header>
+
+  <div class="indic">
+    <b>Indicaciones.</b> Leé con atención cada parte. Cuando termines, presioná <b>Revisar</b> para ver tu resultado. Las preguntas de desarrollo no se califican automáticamente: al revisar verás una respuesta modelo para comparar.
+  </div>
+
+  <main id="examen"></main>
+
+  <section class="resultado" id="resultado" aria-live="polite"></section>
+
+  <div class="acciones">
+    <button id="revisar">Revisar</button>
+    <button id="reiniciar">Reiniciar</button>
+    <button id="imprimir">Imprimir</button>
+  </div>
+</div>
+
+<script>
+const MOVS = ["Barroco","Neoclasicismo","Romanticismo","Realismo","Modernismo","Novela moderna","Existencialismo"];
+const PERS = ["Emma Bovary","Charles Bovary","Rodolphe Boulanger","Léon Dupuis","Homais","Lheureux","Berthe"];
+
+const partes = [
+ {bloque:"Primera sección: movimientos literarios", sub:"Línea del tiempo, rasgos, autores y el péndulo."},
+ {t:"I. Selección única", tema:"lit", inst:"Marcá la opción correcta.", tipo:"mc", items:[
+  {p:"¿Qué movimiento puso al ser humano en el centro, en contraste con la visión de la Edad Media?", o:["Barroco","Renacimiento","Romanticismo","Naturalismo"], a:1},
+  {p:"El Romanticismo reaccionó contra…", o:["el materialismo del Realismo","la tradición completa","la razón fría del Neoclasicismo","el equilibrio renacentista"], a:2},
+  {p:"¿Cuál rasgo pertenece al Realismo?", o:["Un narrador objetivo que retrata la vida cotidiana","El culto a la belleza y la musicalidad","Los sentimientos intensos y lo exótico","La ruptura total con la tradición"], a:0},
+  {p:"¿Qué hace el Naturalismo de Émile Zola?", o:["Regresa a los modelos griegos y romanos","Busca la belleza por encima de todo","Rechaza cualquier descripción de la realidad","Lleva el Realismo al extremo aplicando el método científico"], a:3},
+  {p:"¿Qué obra pertenece al Boom latinoamericano?", o:["Las flores del mal","Cien años de soledad","Germinal","La vida es sueño"], a:1},
+  {p:"El Simbolismo y el Modernismo reaccionaron contra…", o:["el materialismo del Realismo y el Naturalismo","la razón neoclásica","el equilibrio renacentista","las Vanguardias"], a:0}
+ ]},
+ {t:"II. Pareo: obra y movimiento", tema:"lit", inst:"Elegí el movimiento al que pertenece cada obra. Sobra una opción.", tipo:"match", opciones:MOVS, items:[
+  {p:"Calderón de la Barca, <i>La vida es sueño</i>", a:"Barroco"},
+  {p:"Voltaire, <i>Cándido</i>", a:"Neoclasicismo"},
+  {p:"Gustavo Adolfo Bécquer, <i>Rimas</i>", a:"Romanticismo"},
+  {p:"Rubén Darío, <i>Azul</i>", a:"Modernismo"},
+  {p:"Franz Kafka, <i>La metamorfosis</i>", a:"Novela moderna"},
+  {p:"Albert Camus, <i>El extranjero</i>", a:"Existencialismo"}
+ ]},
+ {t:"III. Ordená la línea del tiempo", tema:"lit", inst:"Asigná a cada movimiento su lugar del 1 (el más antiguo) al 6 (el más reciente).", tipo:"match", opciones:["1","2","3","4","5","6"], items:[
+  {p:"Realismo", a:"5"},
+  {p:"Barroco", a:"2"},
+  {p:"Vanguardias", a:"6"},
+  {p:"Renacimiento", a:"1"},
+  {p:"Romanticismo", a:"4"},
+  {p:"Neoclasicismo", a:"3"}
+ ]},
+ {t:"IV. Verdadero o falso", tema:"lit", inst:"Indicá si cada afirmación es verdadera o falsa.", tipo:"tf", items:[
+  {p:"La literatura oscila como un péndulo entre la razón y el orden, por un lado, y la emoción y la libertad, por el otro.", a:true},
+  {p:"Las Vanguardias buscaban conservar la tradición literaria.", a:false},
+  {p:"El Naturalismo sostiene que la herencia y el ambiente determinan a las personas.", a:true},
+  {p:"El Barroco se caracteriza por el equilibrio y la sencillez.", a:false}
+ ]},
+ {bloque:"Segunda sección: Madame Bovary", sub:"Autor, contexto, personajes, argumento y rasgos realistas."},
+ {t:"V. Pareo de personajes", tema:"bov", inst:"Elegí el personaje que corresponde a cada descripción.", tipo:"match", opciones:PERS, items:[
+  {p:"Protagonista que sueña con vivir como en las novelas románticas.", a:"Emma Bovary"},
+  {p:"Médico de pueblo, esposo bueno pero aburrido.", a:"Charles Bovary"},
+  {p:"Terrateniente seductor que la abandona justo antes de huir juntos.", a:"Rodolphe Boulanger"},
+  {p:"Joven pasante de notario que comparte con ella el gusto por la lectura.", a:"Léon Dupuis"},
+  {p:"Farmacéutico presumido que se cree un gran hombre de ciencia.", a:"Homais"},
+  {p:"Comerciante que le vende a crédito y la hunde en deudas.", a:"Lheureux"},
+  {p:"Hija de Emma y Charles.", a:"Berthe"}
+ ]},
+ {t:"VI. Selección única", tema:"bov", inst:"Marcá la opción correcta.", tipo:"mc", items:[
+  {p:"¿Quién escribió <i>Madame Bovary</i>?", o:["Honoré de Balzac","Émile Zola","Gustave Flaubert","Victor Hugo"], a:2},
+  {p:"¿En qué año y país se publicó como libro?", o:["1857, Francia","1867, España","1885, Francia","1830, Inglaterra"], a:0},
+  {p:"¿Cuál es el subtítulo de la novela?", o:["Escenas de la vida parisina","Memorias de una joven","Historia de un amor","Costumbres de provincia"], a:3},
+  {p:"¿En qué pueblos vive el matrimonio Bovary?", o:["Tostes y Yonville","Madrid y Toledo","Londres y Manchester","Macondo y Riohacha"], a:0},
+  {p:"¿Qué experiencia despierta en Emma el deseo de lujo y de una vida distinta?", o:["Un viaje a Italia","El baile en el castillo de La Vaubyessard","Su boda en París","La lectura de periódicos"], a:1},
+  {p:"¿Cómo muere Emma?", o:["En un accidente de carruaje","Durante una epidemia","Se envenena con arsénico","En un duelo"], a:2},
+  {p:"¿Qué ocurrió después de la publicación de la novela?", o:["Fue prohibida para siempre en Francia","Flaubert fue juzgado por ofender la moral pública y resultó absuelto","Flaubert fue encarcelado","Nadie la leyó hasta el siglo XX"], a:1}
+ ]},
+ {t:"VII. Verdadero o falso", tema:"bov", inst:"Indicá si cada afirmación es verdadera o falsa.", tipo:"tf", items:[
+  {p:"El narrador juzga constantemente a Emma y da lecciones morales.", a:false},
+  {p:"El «bovarismo» es imaginarse ser alguien que uno no es.", a:true},
+  {p:"Emma cae en deudas por comprar a crédito.", a:true},
+  {p:"La novela idealiza la vida de provincia como un lugar perfecto.", a:false}
+ ]},
+ {t:"VIII. Desarrollo", tema:"bov", inst:"Respondé cada pregunta con tus palabras, en un párrafo bien desarrollado.", tipo:"open", items:[
+  {p:"¿Por qué se dice que <i>Madame Bovary</i> es una crítica al Romanticismo? Usá al menos un ejemplo de la novela.",
+   m:"Emma construye sus expectativas a partir de novelas románticas: espera un amor apasionado, lujo y aventura. Su vida real en pueblos como Tostes y Yonville es gris, y su esposo Charles es común. Al intentar vivir como en los libros, tiene amantes que la abandonan (Rodolphe) y se endeuda con Lheureux, hasta terminar envenenándose. Flaubert muestra así que idealizar la realidad, como hacía el Romanticismo, lleva a la desilusión."},
+  {p:"Describí la serie de frustraciones que vive Emma Bovary por ser mujer y las limitaciones sociales que tenía por su género en la Francia del siglo XIX. Ejemplificá con <b>al menos dos ejemplos puntuales</b> de la novela.",
+   m:"Emma no tiene más camino que el matrimonio: su educación en el convento solo la preparó para leer, tocar piano y dibujar, no para una profesión, y su padre la casa con Charles. Una vez casada, depende por completo de su esposo; para manejar dinero necesita que Charles le firme un poder, y sus deudas con Lheureux muestran que no tiene forma propia de ganarse la vida. Cuando está embarazada desea tener un varón, porque piensa que un hombre es libre de viajar y cumplir sus deseos, mientras una mujer siempre está atada por la ley y las costumbres; al nacer Berthe se decepciona. Tampoco puede escapar sola de su vida: depende de que Rodolphe la lleve, y él la abandona sin consecuencias, mientras que para ella el adulterio significa la ruina social. Al final, cuando busca ayuda económica, los hombres a quienes acude la rechazan o intentan aprovecharse de su situación."}
+ ]}
+];
+
+const ex = document.getElementById("examen");
+let qid = 0;
+const registro = []; // {parte, tipo, el, a}
+
+partes.forEach((pt,pi)=>{
+  if(pt.bloque){
+    ex.insertAdjacentHTML("beforeend",`<div class="bloque"><h2>${pt.bloque}</h2><p>${pt.sub}</p></div>`);
+    return;
+  }
+  const sec = document.createElement("section");
+  sec.className = "parte " + pt.tema;
+  const puntos = pt.tipo==="open" ? "Sin puntaje automático" : `${pt.items.length} puntos`;
+  sec.innerHTML = `<div class="parte-top"><h2>${pt.t}</h2><span class="pts">${puntos}</span></div><p class="inst">${pt.inst}</p>`;
+  pt.items.forEach((it,ii)=>{
+    const id = "q"+(qid++);
+    let html="";
+    if(pt.tipo==="mc"){
+      html = `<div class="q" data-id="${id}"><p class="enun">${ii+1}. ${it.p}</p><div class="opts">${
+        it.o.map((o,oi)=>`<label><input type="radio" name="${id}" value="${oi}"><span>${String.fromCharCode(97+oi)}) ${o}</span></label>`).join("")
+      }</div><div class="fb"></div></div>`;
+    } else if(pt.tipo==="tf"){
+      html = `<div class="q" data-id="${id}"><p class="enun">${ii+1}. ${it.p}</p><div class="opts tf">
+        <label><input type="radio" name="${id}" value="true"><span>Verdadero</span></label>
+        <label><input type="radio" name="${id}" value="false"><span>Falso</span></label>
+      </div><div class="fb"></div></div>`;
+    } else if(pt.tipo==="match"){
+      html = `<div class="fila" data-id="${id}"><div>${ii+1}. ${it.p}<div class="fb"></div></div><select aria-label="Respuesta ${ii+1}"><option value="">Elegí…</option>${
+        pt.opciones.map(o=>`<option>${o}</option>`).join("")}</select></div>`;
+    } else if(pt.tipo==="open"){
+      html = `<div class="q"><p class="enun">${ii+1}. ${it.p}</p><textarea aria-label="Respuesta de desarrollo"></textarea><div class="modelo"><b>Respuesta modelo:</b> ${it.m}</div></div>`;
+    }
+    sec.insertAdjacentHTML("beforeend",html);
+    if(pt.tipo!=="open") registro.push({pi, tipo:pt.tipo, id, it});
+  });
+  ex.appendChild(sec);
+});
+
+function textoCorrecto(r){
+  if(r.tipo==="mc") return String.fromCharCode(97+r.it.a)+") "+r.it.o[r.it.a];
+  if(r.tipo==="tf") return r.it.a ? "Verdadero" : "Falso";
+  return r.it.a;
+}
+
+document.getElementById("revisar").addEventListener("click",()=>{
+  const porParte = {};
+  let total=0, bien=0;
+  registro.forEach(r=>{
+    const cont = document.querySelector(`[data-id="${r.id}"]`);
+    const fb = cont.querySelector(".fb");
+    let ok=false, resp=null;
+    cont.querySelectorAll("label").forEach(l=>l.classList.remove("good","bad"));
+    if(r.tipo==="match"){
+      const s = cont.querySelector("select"); resp = s.value;
+      ok = resp===r.it.a;
+      s.classList.remove("good","bad"); s.classList.add(ok?"good":"bad");
+    } else {
+      const sel = cont.querySelector("input:checked");
+      resp = sel ? sel.value : null;
+      ok = r.tipo==="mc" ? resp!==null && +resp===r.it.a : resp!==null && (resp==="true")===r.it.a;
+      if(sel) sel.closest("label").classList.add(ok?"good":"bad");
+      const correctVal = r.tipo==="mc" ? String(r.it.a) : String(r.it.a);
+      const correctLabel = cont.querySelector(`input[value="${correctVal}"]`);
+      if(correctLabel) correctLabel.closest("label").classList.add("good");
+    }
+    fb.className = "fb " + (ok?"ok":"no");
+    fb.textContent = ok ? "Correcto" : (resp===null||resp==="" ? "Sin responder. " : "Incorrecto. ") + (ok?"":"Respuesta: "+textoCorrecto(r));
+    total++; if(ok) bien++;
+    const nombre = partes[r.pi].t;
+    porParte[nombre] = porParte[nombre] || {b:0,t:0};
+    porParte[nombre].t++; if(ok) porParte[nombre].b++;
+  });
+  document.body.classList.add("revisado");
+  const nota = Math.round(bien/total*100);
+  const nom = document.getElementById("nom").value.trim();
+  const res = document.getElementById("resultado");
+  res.innerHTML = `<h2>${nom ? "Resultado de "+nom.replace(/[<>&]/g,"") : "Tu resultado"}</h2>
+    <div class="num">${bien} / ${total}</div>
+    <p>Nota: <b>${nota}</b> de 100 · Revisá también las respuestas modelo de la parte VIII.</p>
+    <div class="barras">${Object.entries(porParte).map(([k,v])=>`<div class="barra">${k}: ${v.b} de ${v.t}<div class="track"><div class="fill" style="width:${v.b/v.t*100}%"></div></div></div>`).join("")}</div>`;
+  res.classList.add("visible");
+  res.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+});
+
+document.getElementById("reiniciar").addEventListener("click",()=>{
+  document.querySelectorAll("input[type=radio]").forEach(i=>i.checked=false);
+  document.querySelectorAll("select").forEach(s=>{s.value="";s.classList.remove("good","bad")});
+  document.querySelectorAll("textarea").forEach(t=>t.value="");
+  document.querySelectorAll("label").forEach(l=>l.classList.remove("good","bad"));
+  document.querySelectorAll(".fb").forEach(f=>{f.textContent="";f.className="fb"});
+  document.body.classList.remove("revisado");
+  document.getElementById("resultado").classList.remove("visible");
+  window.scrollTo(0,0);
+});
+document.getElementById("imprimir").addEventListener("click",()=>window.print());
+</script>
+</body>
+</html>
